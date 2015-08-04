@@ -10,6 +10,7 @@ $APPLICATION->SetTitle("Подбор шин");
 // получаем значения переменных из куки или ставим дефолтные
 $view = $APPLICATION->get_cookie('view') ? $APPLICATION->get_cookie("view")  : "mega_filter_result"; 
 $sort = $APPLICATION->get_cookie('sort') ? $APPLICATION->get_cookie("sort")  : "sort_asc";
+$element_count = $APPLICATION->get_cookie('element_count') ? $APPLICATION->get_cookie("element_count")  : "15";
 
 // устанавливаем куки и присваиваем значение соответствующим переменным, если таковые есть в REQUEST
 if(isset($_REQUEST["view"]) ) {
@@ -21,6 +22,11 @@ if(isset($_REQUEST["sort"]) ) {
    $APPLICATION->set_cookie("sort", strVal($_REQUEST["sort"] )); 
    $sort = strVal($_REQUEST["sort"]) ;
    }
+if(isset($_REQUEST["element_count"]) ) {
+   $APPLICATION->set_cookie("element_count", strVal($_REQUEST["element_count"] )); 
+   $element_count = strVal($_REQUEST["element_count"]) ;
+   }
+
 
 
 // разобьем переменную sort на две element_sort_field и element_sort_order, и заодно исправим (price -> catalog_PRICE_1)
@@ -95,21 +101,37 @@ $element_sort_order = $ar_sort[1];
 	</td>
 	<td style="width:65%; vertical-align:top;">
 <!--noindex-->
-<table class="selectors" >
+
+<table  class="selectors" >
 <tr>
  <td align="left">
-      <a<?if($sort=="price_desc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_desc", Array("view", "sort") )?>" rel="nofollow">По цене вниз</a> / 
-      <a<?if($sort=="price_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_asc", Array("view", "sort") )?>" rel="nofollow">по цене вверх</a> / 
-      <a<?if($sort=="sort_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=sort_asc", Array("view", "sort") )?>" rel="nofollow">по порядку</a>
-   </td>
+	 По цене:
+
+      <a<?if($sort=="price_desc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_desc", Array("view", "sort") )?>" rel="nofollow">&#9660;</a>  
+ <a<?if($sort=="price_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_asc", Array("view", "sort") )?>" rel="nofollow">&#9650;</a>      |    
+   <a<?if($sort=="sort_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=sort_asc", Array("view", "sort") )?>" rel="nofollow">По порядку</a>
+ </td>
+
+ <td align="center">
+	 Показывать по:
+<a<?if($element_count=="15") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=15", Array("element_count","view", "sort") )?>" rel="nofollow">15</a> |   
+			<a<?if($element_count=="30") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=30", Array("element_count", "view", "sort") )?>" rel="nofollow">30</a>   |
+			<a<?if($element_count=="50") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=50", Array("element_count", "view", "sort") )?>" rel="nofollow">50</a>  
+ </td>
+
    <td align="right">
-      <a<?if($view=="mega_filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_filter_result", Array("view", "sort") )?>" rel="nofollow">Детально</a> /
-      <a<?if($view=="mega_list") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_list", Array("view", "sort") )?>" rel="nofollow">Список</a> 
-      
+
+		<div class="selectors_switch" ><a<?if($view=="mega_filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_filter_result", Array("view", "sort") )?>" rel="nofollow"> <img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/price.png" width="15" height="15" alt="" /></a> |   
+			<a<?if($view=="filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=filter_result", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/detail.png" width="15" height="15" alt="" /></a>   |
+			<a<?if($view=="mega_list") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_list", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/list.png" width="15" height="15" alt="" /></a>  
+
+	   </div>
+
    </td>
 
 </tr>
 </table>
+
 <!--/noindex-->
 
 		 <?$APPLICATION->IncludeComponent(
@@ -129,8 +151,8 @@ $element_sort_order = $ar_sort[1];
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"SHOW_ALL_WO_SECTION" => "N",
 		"HIDE_NOT_AVAILABLE" => "Y",
-		"PAGE_ELEMENT_COUNT" => "15",
-		"LINE_ELEMENT_COUNT" => "1",
+		"PAGE_ELEMENT_COUNT" => $element_count,
+		"LINE_ELEMENT_COUNT" => "3",
 		"PROPERTY_CODE" => array(0=>"tyre_width",1=>"tyre_height",2=>"tyre_diameter",3=>"tyre_on_index",4=>"hit",5=>"model",6=>"TIP",7=>"SEZON",8=>"CML2_ARTICLE",9=>"CML2_BASE_UNIT",10=>"tyre_load",11=>"order",12=>"CML2_MANUFACTURER",13=>"CML2_TRAITS",14=>"CML2_TAXES",15=>"CML2_ATTRIBUTES",16=>"SHIP_NE_SHIP",17=>"CML2_BAR_CODE",18=>"BRENDDISKI",19=>"tyre_speed",20=>"DOPINFO",21=>"DIAMETRDISKI",22=>"title",23=>"keywords",24=>"description",25=>"TIPDISKI",26=>"SHIRINADISKI",27=>"INDEKS_NAGRUZKI_I_SKOROSTI",28=>"INDEKS_SKOROSTI",29=>"TIP_1",30=>"KOL_VO_OTVERSTIY",31=>"PCD",32=>"VYLET_ET",33=>"DIA",34=>"TSVET",35=>"DOP_SVEDENIE",36=>"ARTIKUL",37=>"BREND",38=>"MODELDISKI",39=>"SHIPOVANNYE",40=>"SEZON_1",41=>"PROFIL",42=>"DIAMETR",43=>"SHIRINA",44=>"",),
 		"OFFERS_LIMIT" => "5",
 		"TEMPLATE_THEME" => "blue",
@@ -171,11 +193,11 @@ $element_sort_order = $ar_sort[1];
 		"PRICE_VAT_INCLUDE" => "Y",
 		"CONVERT_CURRENCY" => "Y",
 		"BASKET_URL" => "/personal/basket.php",
-		"USE_PRODUCT_QUANTITY" => "N",
+		"USE_PRODUCT_QUANTITY" => "Y",
 		"ADD_PROPERTIES_TO_BASKET" => "Y",
 		"PRODUCT_PROPS_VARIABLE" => "prop",
 		"PARTIAL_PRODUCT_PROPERTIES" => "N",
-		"PRODUCT_PROPERTIES" => array(0=>"TIP",1=>"SEZON",2=>"CML2_MANUFACTURER",3=>"CML2_TRAITS",4=>"CML2_TAXES",5=>"CML2_ATTRIBUTES",6=>"SHIP_NE_SHIP",7=>"DOPINFO",8=>"TIPDISKI",9=>"DOP_SVEDENIE",10=>"ARTIKUL",),
+		"PRODUCT_PROPERTIES" => array(),
 		"ADD_TO_BASKET_ACTION" => "ADD",
 		"DISPLAY_COMPARE" => "N",
 		"PAGER_TEMPLATE" => ".default",

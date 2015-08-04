@@ -16,6 +16,11 @@ if(isset($_REQUEST["view"]) ) {
    $APPLICATION->set_cookie("view", strVal($_REQUEST["view"]) ); 
    $view = strVal($_REQUEST["view"]) ;
    }
+if(isset($_REQUEST["element_count"]) ) {
+   $APPLICATION->set_cookie("element_count", strVal($_REQUEST["element_count"] )); 
+   $element_count = strVal($_REQUEST["element_count"]) ;
+   }
+
    
 if(isset($_REQUEST["sort"]) ) {
    $APPLICATION->set_cookie("sort", strVal($_REQUEST["sort"] )); 
@@ -91,18 +96,32 @@ $element_sort_order = $ar_sort[1];
 	</td>
 	<td style="width:65%; vertical-align:top;">
 <!--noindex-->
-<table class="selectors">
+<table  class="selectors" >
 <tr>
  <td align="left">
-      <a<?if($sort=="price_desc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_desc", Array("view", "sort") )?>" rel="nofollow">По цене вниз</a> / 
-      <a<?if($sort=="price_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_asc", Array("view", "sort") )?>" rel="nofollow">по цене вверх</a> / 
-      <a<?if($sort=="sort_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=sort_asc", Array("view", "sort") )?>" rel="nofollow">по порядку</a>
-   </td>
+	 По цене:
+
+      <a<?if($sort=="price_desc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_desc", Array("view", "sort") )?>" rel="nofollow">&#9660;</a>  
+ <a<?if($sort=="price_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_asc", Array("view", "sort") )?>" rel="nofollow">&#9650;</a>      |    
+   <a<?if($sort=="sort_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=sort_asc", Array("view", "sort") )?>" rel="nofollow">По порядку</a>
+ </td>
+ <td align="center">
+	 Показывать по:
+<a<?if($element_count=="15") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=15", Array("element_count","view", "sort") )?>" rel="nofollow">15</a> |   
+			<a<?if($element_count=="30") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=30", Array("element_count", "view", "sort") )?>" rel="nofollow">30</a>   |
+			<a<?if($element_count=="50") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=50", Array("element_count", "view", "sort") )?>" rel="nofollow">50</a>  
+ </td>
+
    <td align="right">
-      <a<?if($view=="mega_filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_filter_result", Array("view", "sort") )?>" rel="nofollow">Детально</a> /
-      <a<?if($view=="mega_list") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_list", Array("view", "sort") )?>" rel="nofollow">Список</a> 
-      
+
+		<div class="selectors_switch" ><a<?if($view=="mega_filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_filter_result", Array("view", "sort") )?>" rel="nofollow"> <img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/price.png" width="15" height="15" alt="" /></a> |   
+			<a<?if($view=="filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=filter_result", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/detail.png" width="15" height="15" alt="" /></a>   |
+			<a<?if($view=="mega_list") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_list", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/list.png" width="15" height="15" alt="" /></a>  
+
+	   </div>
+
    </td>
+
 </tr>
 </table>
 <!--/noindex-->
@@ -123,8 +142,8 @@ $view,
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"SHOW_ALL_WO_SECTION" => "N",
 		"HIDE_NOT_AVAILABLE" => "Y",
-		"PAGE_ELEMENT_COUNT" => "32",
-		"LINE_ELEMENT_COUNT" => "1",
+		"PAGE_ELEMENT_COUNT" => $element_count,
+		"LINE_ELEMENT_COUNT" => "3",
 		"PROPERTY_CODE" => array(0=>"wheels_diameter",1=>"wheels_width",2=>"wheels_aperture",3=>"wheels_gab",4=>"wheels_center",5=>"model",6=>"BREND",7=>"BRENDDISKI",8=>"MODELDISKI",9=>"DIAMETRDISKI",10=>"",),
 		"OFFERS_LIMIT" => "5",
 		"TEMPLATE_THEME" => "blue",
