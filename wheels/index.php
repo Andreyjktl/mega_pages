@@ -1,12 +1,40 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Диски");
-?><?$APPLICATION->IncludeComponent(
-	"bitrix:catalog", 
-	"wheels", 
-	array(
+?><div class="col_left">
+	<h4 style="margin-top:10px; margin-bottom:10px; margin-left:30px; ">Поиск по характеристикам</h4>
+ <?$APPLICATION->IncludeComponent(
+	"dvs:dvs.filter",
+	"filter_inner_vertical",
+	Array(
+		"IBLOCK_ID" => "5",
+		"B_IBLOCK_ID" => "4",
+		"W_IBLOCK_ID" => "7",
+		"W_B_IBLOCK_ID" => "6",
+		"A_IBLOCK_ID" => "8",
+		"COMPONENT_TEMPLATE" => "filter",
+		"USER_PROPERTY_NAME" => ""
+	)
+);?><br>
+
+	 <?$APPLICATION->IncludeComponent(
+	"bitrix:main.include",
+	"",
+	Array(
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_SHOW" => "page",
+		"AREA_FILE_SUFFIX" => "inc",
+		"EDIT_TEMPLATE" => ""
+	)
+);?>&nbsp;&nbsp;
+</div>
+<div class="col_right">
+	 <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog",
+	"wheels",
+	Array(
 		"IBLOCK_TYPE" => "catalog",
-		"IBLOCK_ID" => "4",
+		"IBLOCK_ID" => "6",
 		"BASKET_URL" => "/personal/cart/",
 		"ACTION_VARIABLE" => "action",
 		"PRODUCT_ID_VARIABLE" => "id",
@@ -26,34 +54,20 @@ $APPLICATION->SetTitle("Диски");
 		"SET_STATUS_404" => "Y",
 		"USE_FILTER" => "Y",
 		"FILTER_NAME" => "arrFilter",
-		"FILTER_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"FILTER_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"FILTER_PRICE_CODE" => array(
-		),
+		"FILTER_FIELD_CODE" => array(0=>"",1=>"",),
+		"FILTER_PROPERTY_CODE" => array(0=>"",1=>"",),
+		"FILTER_PRICE_CODE" => array(),
 		"USE_REVIEW" => "Y",
 		"USE_COMPARE" => "Y",
 		"COMPARE_NAME" => "CATALOG_COMPARE_LIST",
-		"COMPARE_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"COMPARE_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"COMPARE_FIELD_CODE" => array(0=>"",1=>"",),
+		"COMPARE_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"DISPLAY_ELEMENT_SELECT_BOX" => "N",
 		"ELEMENT_SORT_FIELD_BOX" => "name",
 		"ELEMENT_SORT_ORDER_BOX" => "asc",
 		"COMPARE_ELEMENT_SORT_FIELD" => "shows",
 		"COMPARE_ELEMENT_SORT_ORDER" => "asc",
-		"PRICE_CODE" => array(
-		),
+		"PRICE_CODE" => array(0=>"Продажи через сайт",),
 		"USE_PRICE_COUNT" => "N",
 		"SHOW_PRICE_COUNT" => "1",
 		"PRICE_VAT_INCLUDE" => "Y",
@@ -63,27 +77,17 @@ $APPLICATION->SetTitle("Диски");
 		"TOP_LINE_ELEMENT_COUNT" => "3",
 		"TOP_ELEMENT_SORT_FIELD" => "shows",
 		"TOP_ELEMENT_SORT_ORDER" => "asc",
-		"TOP_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"TOP_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"PAGE_ELEMENT_COUNT" => "100",
 		"LINE_ELEMENT_COUNT" => strpos(SITE_TEMPLATE_ID,"one")!==false?5:4,
 		"ELEMENT_SORT_FIELD" => "shows",
 		"ELEMENT_SORT_ORDER" => "asc",
-		"LIST_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"LIST_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"LIST_META_KEYWORDS" => "-",
 		"LIST_META_DESCRIPTION" => "-",
 		"LIST_BROWSER_TITLE" => "-",
-		"DETAIL_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "wheels_more_photo",
-			2 => "",
-		),
+		"DETAIL_PROPERTY_CODE" => array(0=>"",1=>"wheels_more_photo",2=>"",),
 		"DETAIL_META_KEYWORDS" => "-",
 		"DETAIL_META_DESCRIPTION" => "-",
 		"DETAIL_BROWSER_TITLE" => "-",
@@ -104,66 +108,38 @@ $APPLICATION->SetTitle("Диски");
 		"PAGER_SHOW_ALL" => "N",
 		"AJAX_OPTION_ADDITIONAL" => "",
 		"ADD_SECTIONS_CHAIN" => "Y",
-		"OFFERS_CART_PROPERTIES" => array(
-		),
-		"LIST_OFFERS_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"DETAIL_OFFERS_FIELD_CODE" => array(
-			0 => "",
-			1 => "CATALOG_QUANTITY",
-			2 => "DETAIL_PAGE_URL",
-			3 => "",
-		),
+		"OFFERS_CART_PROPERTIES" => array(),
+		"LIST_OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
+		"DETAIL_OFFERS_FIELD_CODE" => array(0=>"",1=>"CATALOG_QUANTITY",2=>"DETAIL_PAGE_URL",3=>"",),
 		"COMPONENT_TEMPLATE" => "wheels",
-		"HIDE_NOT_AVAILABLE" => "N",
+		"HIDE_NOT_AVAILABLE" => "Y",
 		"CACHE_GROUPS" => "Y",
 		"ADD_ELEMENT_CHAIN" => "N",
 		"USE_ELEMENT_COUNTER" => "Y",
-		"FILTER_OFFERS_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"FILTER_OFFERS_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"FILTER_OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
+		"FILTER_OFFERS_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"CONVERT_CURRENCY" => "N",
 		"USE_PRODUCT_QUANTITY" => "Y",
 		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
 		"ADD_PROPERTIES_TO_BASKET" => "Y",
 		"PRODUCT_PROPS_VARIABLE" => "prop",
 		"PARTIAL_PRODUCT_PROPERTIES" => "Y",
-		"PRODUCT_PROPERTIES" => array(
-		),
+		"PRODUCT_PROPERTIES" => array(),
 		"TOP_ELEMENT_SORT_FIELD2" => "shows",
 		"TOP_ELEMENT_SORT_ORDER2" => "asc",
-		"TOP_OFFERS_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"TOP_OFFERS_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"TOP_OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
+		"TOP_OFFERS_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"TOP_OFFERS_LIMIT" => "5",
 		"SECTION_COUNT_ELEMENTS" => "Y",
 		"SECTION_TOP_DEPTH" => "2",
 		"ELEMENT_SORT_FIELD2" => "shows",
 		"ELEMENT_SORT_ORDER2" => "asc",
-		"LIST_OFFERS_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"LIST_OFFERS_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"LIST_OFFERS_LIMIT" => "5",
 		"DETAIL_SET_CANONICAL_URL" => "N",
 		"DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
 		"SHOW_DEACTIVATED" => "N",
-		"DETAIL_OFFERS_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"DETAIL_OFFERS_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"USE_STORE" => "N",
 		"OFFERS_SORT_FIELD" => "shows",
 		"OFFERS_SORT_ORDER" => "asc",
@@ -176,25 +152,25 @@ $APPLICATION->SetTitle("Диски");
 		"FORUM_ID" => "",
 		"URL_TEMPLATES_READ" => "",
 		"SHOW_LINK_TO_FORUM" => "Y",
-		"COMPARE_OFFERS_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"COMPARE_OFFERS_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"SEF_URL_TEMPLATES" => array(
-			"sections" => "",
-			"section" => "#SECTION_CODE#/",
-			"element" => "#SECTION_CODE#/#ELEMENT_CODE#/",
-			"compare" => "compare.php?action=#ACTION_CODE#",
-		),
-		"VARIABLE_ALIASES" => array(
-			"compare" => array(
-				"ACTION_CODE" => "action",
-			),
+		"COMPARE_OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
+		"COMPARE_OFFERS_PROPERTY_CODE" => array(0=>"",1=>"",),
+		"CURRENCY_ID" => "RUB",
+		"SEF_URL_TEMPLATES" => array("sections"=>"","section"=>"#SECTION_CODE#/","element"=>"#SECTION_CODE#/#ELEMENT_CODE#/","compare"=>"compare.php?action=#ACTION_CODE#",),
+		"VARIABLE_ALIASES" => Array(),
+		"VARIABLE_ALIASES" => Array(
 		)
-	),
-	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+	)
+);?>
+</div>
+<div class="clear:both;">
+</div>
+ &nbsp;<?$APPLICATION->IncludeComponent(
+	"bitrix:main.include",
+	"",
+	Array(
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_SHOW" => "page",
+		"AREA_FILE_SUFFIX" => "bot",
+		"EDIT_TEMPLATE" => ""
+	)
+);?><br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

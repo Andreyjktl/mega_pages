@@ -1,0 +1,1 @@
+<span style="font-size: 11pt;"><span style="color: #0085c1;">&nbsp;<span style="color: #A09F9F;">8 (351)</span> </span></span><span style="color: #0085c1;"> </span><b><span style="color: #0085c1;"> </span><span style="font-size: 16pt; color: #0085c1;">751 09 19&nbsp;</span></b><img src="/bitrix/templates/main_template/images/phone.png">

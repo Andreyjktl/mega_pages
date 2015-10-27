@@ -1,0 +1,3 @@
+<?
+$sSectionName="product_t";
+?>

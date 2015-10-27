@@ -10,7 +10,6 @@ $APPLICATION->SetTitle("Подбор дисков");
 // получаем значения переменных из куки или ставим дефолтные
 $view = $APPLICATION->get_cookie('view') ? $APPLICATION->get_cookie("view")  : "mega_filter_result"; 
 $sort = $APPLICATION->get_cookie('sort') ? $APPLICATION->get_cookie("sort")  : "sort_asc";
-
 // устанавливаем куки и присваиваем значение соответствующим переменным, если таковые есть в REQUEST
 if(isset($_REQUEST["view"]) ) {
    $APPLICATION->set_cookie("view", strVal($_REQUEST["view"]) ); 
@@ -21,110 +20,37 @@ if(isset($_REQUEST["element_count"]) ) {
    $element_count = strVal($_REQUEST["element_count"]) ;
    }
 
-   
 if(isset($_REQUEST["sort"]) ) {
    $APPLICATION->set_cookie("sort", strVal($_REQUEST["sort"] )); 
    $sort = strVal($_REQUEST["sort"]) ;
    }
-
-
 // разобьем переменную sort на две element_sort_field и element_sort_order, и заодно исправим (price -> catalog_PRICE_1)
 $ar_sort=explode("_", $sort);
 $element_sort_field = ($ar_sort[0] == "price" )  ? "catalog_PRICE_1" : $ar_sort[0];
 $element_sort_order = $ar_sort[1];
-
-
 ?>
-
 <table cellpadding="10px" cellspacing="10px">
 <tbody>
 <tr>
 	<td style="width:33%; vertical-align:top; padding-right:30px;">
-		 <?$APPLICATION->IncludeComponent(
-	"api:search.filter",
-	"mega_gray-blue",
-	Array(
-		"COMPONENT_TEMPLATE" => "mega_gray-blue",
-		"IBLOCK_TYPE" => "catalog",
-		"IBLOCK_ID" => "7",
-		"FILTER_NAME" => "arrFilter",
-		"REDIRECT_FOLDER" => "wheels/podbor-diskov.php",
-		"FIELD_CODE" => array(0=>"",1=>"",),
-		"PROPERTY_CODE" => array(0=>"wheels_diameter",1=>"wheels_width",2=>"wheels_aperture",3=>"wheels_gab",4=>"wheels_center",5=>"wheel_brend",6=>"BRENDDISKI",7=>"",),
-		"CHECK_ACTIVE_SECTIONS" => "N",
-		"SECTION_ID" => $_REQUEST["SECTION_ID"],
-		"SECTION_CODE" => $_REQUEST["SECTION_CODE"],
-		"LIST_HEIGHT" => "5",
-		"TEXT_WIDTH" => "209",
-		"NUMBER_WIDTH" => "85",
-		"SELECT_WIDTH" => "220",
-		"ELEMENT_IN_ROW" => "3",
-		"NAME_WIDTH" => "200",
-		"FILTER_TITLE" => "Фильтр",
-		"BUTTON_ALIGN" => "left",
-		"SELECT_IN_CHECKBOX" => array(0=>"",1=>"",),
-		"CHECKBOX_NEW_STRING" => "Y",
-		"REPLACE_ALL_LABEL" => "Y",
-		"REMOVE_POINTS" => "N",
-		"SECTIONS_DEPTH_LEVEL" => "",
-		"SECTIONS_FIELD_TITLE" => "Разделы",
-		"SECTIONS_FIELD_VALUE_TITLE" => "Все разделы",
-		"CACHE_TYPE" => "A",
-		"CACHE_TIME" => "36000000",
-		"CACHE_GROUPS" => "Y",
-		"SAVE_IN_SESSION" => "N",
-		"PRICE_CODE" => array(0=>"Продажи через сайт",),
-		"INCLUDE_JQUERY" => "N",
-		"INCLUDE_PLACEHOLDER" => "Y",
-		"INCLUDE_CHOSEN_PLUGIN" => "Y",
-		"CHOSEN_PLUGIN_PARAM__disable_search_threshold" => "30",
-		"INCLUDE_FORMSTYLER_PLUGIN" => "Y",
-		"INCLUDE_AUTOCOMPLETE_PLUGIN" => "N",
-		"INCLUDE_JQUERY_UI" => "N",
-		"INCLUDE_JQUERY_UI_SLIDER" => "N",
-		"JQUERY_UI_SLIDER_BORDER_RADIUS" => "N",
-		"INCLUDE_JQUERY_UI_SLIDER_TOOLTIP" => "N",
-		"JQUERY_UI_THEME" => "ts-red",
-		"JQUERY_UI_FONT_SIZE" => "10px"
-	)
-);?> <?$APPLICATION->IncludeComponent(
+
+
+<?$APPLICATION->IncludeComponent(
 	"bitrix:main.include",
 	"",
 	Array(
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_SHOW" => "page",
+		"AREA_FILE_SUFFIX" => "inc",
+		"EDIT_TEMPLATE" => ""
 	)
-);?>
+);?>  
 	</td>
 	<td style="width:65%; vertical-align:top;">
-<!--noindex-->
-<table  class="selectors" >
-<tr>
- <td align="left">
-	 По цене:
+<?$APPLICATION->IncludeComponent(
+"bitrix:main.include", "", array("AREA_FILE_SHOW" => "file", "PATH" => 
+SITE_DIR."include/sort_count_view.php"), false);?>
 
-      <a<?if($sort=="price_desc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_desc", Array("view", "sort") )?>" rel="nofollow">&#9660;</a>  
- <a<?if($sort=="price_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=price_asc", Array("view", "sort") )?>" rel="nofollow">&#9650;</a>      |    
-   <a<?if($sort=="sort_asc") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("sort=sort_asc", Array("view", "sort") )?>" rel="nofollow">По порядку</a>
- </td>
- <td align="center">
-	 Показывать по:
-<a<?if($element_count=="15") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=15", Array("element_count","view", "sort") )?>" rel="nofollow">15</a> |   
-			<a<?if($element_count=="30") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=30", Array("element_count", "view", "sort") )?>" rel="nofollow">30</a>   |
-			<a<?if($element_count=="50") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("element_count=50", Array("element_count", "view", "sort") )?>" rel="nofollow">50</a>  
- </td>
-
-   <td align="right">
-
-		<div class="selectors_switch" ><a<?if($view=="mega_filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_filter_result", Array("view", "sort") )?>" rel="nofollow"> <img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/price.png" width="15" height="15" alt="" /></a> |   
-			<a<?if($view=="filter_result") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=filter_result", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/detail.png" width="15" height="15" alt="" /></a>   |
-			<a<?if($view=="mega_list") :?> style="font-weight:bold"<?endif?> href="<?=$APPLICATION->GetCurPageParam("view=mega_list", Array("view", "sort") )?>" rel="nofollow"><img src="<?echo SITE_TEMPLATE_PATH?>/images/icons/list.png" width="15" height="15" alt="" /></a>  
-
-	   </div>
-
-   </td>
-
-</tr>
-</table>
-<!--/noindex-->
 		 <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
 $view,
